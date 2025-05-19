@@ -1,0 +1,1595 @@
+openapi: 3.0.3
+info:
+  title: Signal API
+  version: 1.0.0
+  description: Signal API documentation
+servers:
+  # - url: http://localhost:5000
+  # - url: http://192.168.1.20:5000
+tags:
+  - name: TrendWaveform
+    description: 趋势波形相关功能
+  - name: EnvelopeDemodulation
+    description: 包络解调相关功能
+  - name: MultiTimeDomain
+    description: 多时域相关功能
+  - name: CrossPhase
+    description: 交叉相位相关功能
+  - name: Diagnose
+    description: 诊断功能
+  - name: EWTSVD
+    description: EWTSVD相关功能
+paths:
+  /calSignalEffectiveVal:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 计算信号有效值
+      description: 输入csv文件字符串和数据类型，输出XYZ三轴信号有效值
+      requestBody:
+        description: 计算有效值(RMS)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalSignalEffectiveValRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalSignalEffectiveValRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalSignalEffectiveValRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalSignalEffectiveValResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalSignalEffectiveValResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /calSignalPeakToPeakVal:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 计算信号峰峰值
+      description: 输入csv文件字符串和数据类型，输出XYZ三轴信号有效值
+      requestBody:
+        description: 计算峰峰值
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalSignalPeakToPeakValRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalSignalPeakToPeakValRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalSignalPeakToPeakValRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalSignalPeakToPeakValResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalSignalPeakToPeakValResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /calAudioSignalDecibel:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 计算声音信号分贝数
+      description: 输入csv文件字符串，输出声音信号气压rms(单位Pa)和分贝dB数
+      requestBody:
+        description: 计算声音信号分贝数，附带计算声音信号气压rms(单位Pa)，声音信号为一维数据，原始数据默认X轴为数据轴，YZ轴数据为空
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalAudioSignalDecibelRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalAudioSignalDecibelRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalAudioSignalDecibelRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalAudioSignalDecibelResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalAudioSignalDecibelResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /calSignalFeature:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 计算信号特征值
+      description: 输入csv文件字符串，输出XYZ三轴信号特征值，包括：均值 mean、最大值 max、最小值 min、有效值 effectiveVal、峭度指标 kurtosisVal、歪度指标 skewnessVal、裕度因子 marginFactor、峰值因子 crestFactor(即ABB默认指标)、波形因子 shapeFactor、脉冲因子 impulseFactor、平均幅值 meanAmplitude、方根幅值 rootSquareAmplitude、峰值 peakVal、峰峰值 peakToPeakVal
+      requestBody:
+        description: 计算信号特征值
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalSignalFeatureRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalSignalFeatureRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalSignalFeatureRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalSignalFeatureResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalSignalFeatureResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /calSpeedTimeDomainCurve:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 本地测试用，基于加速度数据计算速度数据
+      description: 输入加速度csv文件字符串，输出速度数据，包括X/Y/Z三轴的时域timeDomain和频域freqDomain数据。时域数据包含时间轴数据time和传感器数据val，频域数据包含频率轴数据freq和振幅数据amplitude
+      requestBody:
+        description: 基于加速度数据计算速度数据
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalSpeedTimeDomainCurveRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalSpeedTimeDomainCurveRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalSpeedTimeDomainCurveRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalSpeedTimeDomainCurveResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalSpeedTimeDomainCurveResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /freqDomainConversion:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 频域转换(单独某一个数据，如高频数据或低频数据或磁场数据)
+      description: 输入csv文件字符串，新增输入参数windowType，用于选择波形处理的窗函数，目前可选"hanning"（汉宁窗）和"hamming"（海明窗），输出频域转换结果，包括X/Y/Z三轴的时域timeDomain和频域freqDomain数据。时域数据包含时间轴数据time和传感器数据val，频域数据包含频率轴数据freq和振幅数据amplitude
+      requestBody:
+        description: 频域转换
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FreqDomainConversionRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/FreqDomainConversionRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/FreqDomainConversionRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FreqDomainConversionResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/FreqDomainConversionResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /filter:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 时域数据滤波
+      description: 输入需要滤波的时域数据，采样频率，低通截止频率，高通截止频率，滤波模式代码（0:带通滤波，1:带阻滤波，2:高通滤波，3:低通滤波），输出滤波后的时域数据
+      requestBody:
+        description: 频域转换
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/FilterRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/FilterRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FilterResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/FilterResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /calEnvelopeDemodulation:
+    post:
+      tags:
+        - EnvelopeDemodulation
+      summary: 根据传感器原始采集数据，输入轴(X/Y/Z)，频段区间(低通截止频率cutOffFreqLow, 高通截止频率cutOffFreqHigh)等参数计算包络解调结果
+      description: 输入csv文件字符串，输入轴(X/Y/Z)，频段区间(低通截止频率cutOffFreqLow, 高通截止频率cutOffFreqHigh)，新增输入参数windowType，用于选择波形处理的窗函数，目前可选"hanning"（汉宁窗）和"hamming"（海明窗），输出频域曲线(频率-振幅谱)，时域包络解调结果
+      requestBody:
+        description: 生成包络解调结果
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalEnvelopeDemodulationRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalEnvelopeDemodulationRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalEnvelopeDemodulationRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalEnvelopeDemodulationResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalEnvelopeDemodulationResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /calDataEnvelopeDemodulation:
+    post:
+      tags:
+        - EnvelopeDemodulation
+      summary: 根据传感器原始采集数据，输入轴(X/Y/Z)，频段区间(低通截止频率cutOffFreqLow, 高通截止频率cutOffFreqHigh)，包络计算模式、窗函数等参数，计算原始数据和包络解调的功率谱密度
+      description: 输入csv文件字符串，输入轴(X/Y/Z)，频段区间(低通截止频率cutOffFreqLow, 高通截止频率cutOffFreqHigh)，新增输出参数包络计算模式envelopeCalMode，目前可选"hilbert"（希尔伯特包络）和"peak_connect"（峰值连接包络），新增输入参数windowType，用于选择波形处理的窗函数，目前可选"hanning"（汉宁窗）和"hamming"（海明窗），输出原始数据频域和包络解调功率谱密度PSD
+      requestBody:
+        description: 生成目标轴数据PSD和包络解调PSD
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalDataEnvelopeDemodulationRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalDataEnvelopeDemodulationRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalDataEnvelopeDemodulationRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalDataEnvelopeDemodulationResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalDataEnvelopeDemodulationResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /calTimeDomainCurve:
+    post:
+      tags:
+        - MultiTimeDomain
+      summary: 根据传感器原始采集数据生成时域曲线
+      description: 输入csv文件字符串，输出时域曲线，包括X/Y/Z三轴的时域时间轴数据time和传感器数据val
+      requestBody:
+        description: 生成时域曲线
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalTimeDomainCurveRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CalTimeDomainCurveRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CalTimeDomainCurveRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalTimeDomainCurveResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CalTimeDomainCurveResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /crossPhaseAnalyse:
+    post:
+      tags:
+        - CrossPhase
+      summary: 根据传感器原始采集数据生成交叉相位分析
+      description: 输入csv文件字符串，输出XYZ三轴互补功率曲线，以及XY/YZ/ZX的相位差曲线
+      requestBody:
+        description: 生成XYZ三轴互补功率曲线，以及XY/YZ/ZX的相位差曲线
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrossPhaseAnalyseRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CrossPhaseAnalyseRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CrossPhaseAnalyseRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrossPhaseAnalyseResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CrossPhaseAnalyseResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /showSignalFeature:
+    post:
+      tags:
+        - TrendWaveform
+      summary: 本地测试用，基于传感器原始数据，生成目标数据的平方自谱、线性自谱、PSD功率密度谱、ESD能量密度谱，用plotly展示
+      description: 输入csv文件字符串，输出目标数据的平方自谱、线性自谱、PSD功率密度谱、ESD能量密度谱，用plotly展示
+      requestBody:
+        description: 生成目标数据的平方自谱、线性自谱、PSD功率密度谱、ESD能量密度谱，用plotly展示
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShowSignalFeatureRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/ShowSignalFeatureRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/ShowSignalFeatureRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShowSignalFeatureResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ShowSignalFeatureResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /detectCameraMove:
+    post:
+      tags:
+        - Diagnose
+      summary: 摄像机异常移动诊断
+      description: 输入csv文件字符串，输出诊断结果(是否被异常移动)
+      requestBody:
+        description: 若允许图像输出，则输出信号和峰值
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DetectCameraMoveRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/DetectCameraMoveRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/DetectCameraMoveRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DetectCameraMoveResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/DetectCameraMoveResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+  /diagnose:
+    post:
+      tags:
+        - Diagnose
+      summary: 设备异常诊断
+      description: 输入csv文件字符串，和诊断设备类型，输出诊断结果
+      requestBody:
+        description: 诊断设备类型字段equipType（电机motor，曲柄轴crankshaft，减速箱gearbox，游梁中轴beam_center_axis，地脚footing，轴承bearing），诊断结果conditionCode为状态码
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiagnoseRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/DiagnoseRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/DiagnoseRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagnoseResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/DiagnoseResponse"
+        "405":
+          description: Invalid input
+          content:
+            example: { status: 3, errorMessage: something wrong }
+ #=====================================================================
+  /analyzeewt:
+    post:
+      tags:
+        - EWTSVD
+      summary: 信号分析主接口
+      description: 输入csv字符串格式的数据，进行EWT+Hilbert+SVD分析，返回三轴诊断指数di
+      requestBody:
+        description: 包括csvData（CSV原始字符串）、decayFactor（指数权重）、valType（信号类型）、serial_no（设备ID）
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EwtAnalyzeRequest"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/EwtAnalyzeRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/EwtAnalyzeRequest"
+      responses:
+        "200":
+          description: 成功返回三轴分析结果
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EwtAnalyzeResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/EwtAnalyzeResponse"
+        "400":
+          description: 输入不合法（如缺少csvData）
+          content:
+            application/json:
+              example:
+                status: 1
+                errorMessage: 缺少 csvData 参数
+
+
+
+
+
+
+components:
+  schemas:
+    CalSignalEffectiveValRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        valType:
+          type: string
+          example: lowAcc
+    CalSignalEffectiveValResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            effectiveVal:
+              type: object
+              properties:
+                x:
+                  type: float
+                  format: float64
+                  example: 1.0
+                y:
+                  type: float
+                  format: float64
+                  example: 1.0
+                z:
+                  type: float
+                  format: float64
+                  example: 1.0
+            unit:
+              type: string
+              example: g
+    CalSignalPeakToPeakValRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        valType:
+          type: string
+          example: lowAcc
+    CalSignalPeakToPeakValResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            peakToPeakVal:
+              type: object
+              properties:
+                x:
+                  type: float
+                  format: float64
+                  example: 1.0
+                y:
+                  type: float
+                  format: float64
+                  example: 1.0
+                z:
+                  type: float
+                  format: float64
+                  example: 1.0
+            unit:
+              type: string
+              example: g
+    CalAudioSignalDecibelRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        valType:
+          type: string
+          example: audio
+    CalAudioSignalDecibelResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            rms:
+              type: float
+              format: float64
+              example: 1.0
+            rmsUnit:
+              type: string
+              example: Pa
+            decibel:
+              type: float
+              format: float64
+              example: 50.0
+    CalSignalFeatureRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        valType:
+          type: string
+          example: lowAcc
+    CalSignalFeatureResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            unit:
+              type: string
+              example: g
+            xdata:
+              type: object
+              properties:
+                mean:
+                  type: float
+                  format: float64
+                  example: 1.0
+                max:
+                  type: float
+                  format: float64
+                  example: 1.0
+                min:
+                  type: float
+                  format: float64
+                  example: 1.0
+                effectiveVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                kurtosisVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                skewnessVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                marginFactor:
+                  type: float
+                  format: float64
+                  example: 1.0
+                crestFactor:
+                  type: float
+                  format: float64
+                  example: 1.0
+                shapeFactor:
+                  type: float
+                  format: float64
+                  example: 1.0
+                impulseFactor:
+                  type: float
+                  format: float64
+                  example: 1.0
+                meanAmplitude:
+                  type: float
+                  format: float64
+                  example: 1.0
+                rootSquareAmplitude:
+                  type: float
+                  format: float64
+                  example: 1.0
+                peakVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                peakToPeakVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+            ydata:
+              type: object
+              properties:
+                mean:
+                  type: float
+                  format: float64
+                  example: 1.0
+                max:
+                  type: float
+                  format: float64
+                  example: 1.0
+                min:
+                  type: float
+                  format: float64
+                  example: 1.0
+                effectiveVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                kurtosisVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                marginVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                skewVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                meanAmplitude:
+                  type: float
+                  format: float64
+                  example: 1.0
+                rmsAmplitude:
+                  type: float
+                  format: float64
+                  example: 1.0
+                peakToPeakVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+            zdata:
+              type: object
+              properties:
+                mean:
+                  type: float
+                  format: float64
+                  example: 1.0
+                max:
+                  type: float
+                  format: float64
+                  example: 1.0
+                min:
+                  type: float
+                  format: float64
+                  example: 1.0
+                effectiveVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                kurtosisVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                marginVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                skewVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+                meanAmplitude:
+                  type: float
+                  format: float64
+                  example: 1.0
+                rmsAmplitude:
+                  type: float
+                  format: float64
+                  example: 1.0
+                peakToPeakVal:
+                  type: float
+                  format: float64
+                  example: 1.0
+    CalSpeedTimeDomainCurveRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        axis:
+          type: string
+          example: X
+        startTime:
+          type: float
+          format: float64
+          example: 1.8
+        lenRatio:
+          type: float
+          format: float64
+          example: 0.5
+    CalSpeedTimeDomainCurveResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            x:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+                    idxPeak:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    idxNearestPeak:
+                      type: array
+                      example: [ 0, 1, 2 ]
+            y:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+                    idxPeak:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    idxNearestPeak:
+                      type: array
+                      example: [ 0, 1, 2 ]
+            z:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+                    idxPeak:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    idxNearestPeak:
+                      type: array
+                      example: [ 0, 1, 2 ]
+    FreqDomainConversionTotalRequest:
+      type: object
+      properties:
+        mag:
+          type: string
+          example: ""
+        lowFrequencyAcc:
+          type: string
+          example: ""
+        highFrequencyAcc:
+          type: string
+          example: ""
+    FreqDomainConversionTotalResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        highFreq:
+          type: object
+          properties:
+            x:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+            y:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+            z:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+        lowFreq:
+          type: object
+          properties:
+            x:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+            y:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+            z:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+        mag:
+          type: object
+          properties:
+            x:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+            y:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+            z:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    time:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    val:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    freq:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    amplitude:
+                      type: array
+                      example: [ 0, 0, 1 ]
+    FreqDomainConversionRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        valType:
+          type: string
+          example: lowAcc
+        windowType:
+          type: string
+          example: hanning
+    FreqDomainConversionResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            xdata:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    x:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    y:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                    idxPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                    idxNearestPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    x:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    y:
+                      type: array
+                      example: [ 0, 0, 1 ]
+                    idxPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                    idxNearestPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+            ydata:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    x:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    y:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    x:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    y:
+                      type: array
+                      example: [ 0, 0, 1 ]
+                    idxPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                    idxNearestPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+            zdata:
+              type: object
+              properties:
+                timeDomain:
+                  type: object
+                  properties:
+                    x:
+                      type: array
+                      example: [ 0, 0.1, 0.2 ]
+                    y:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                freqDomain:
+                  type: object
+                  properties:
+                    x:
+                      type: array
+                      example: [ 0, 1, 2 ]
+                    y:
+                      type: array
+                      example: [ 0, 0, 1 ]
+                    idxPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+                    idxNearestPeak:
+                      type: array
+                      example: [ 1, 2, 3 ]
+            unit:
+              type: string
+              example: g
+    FilterRequest:
+      type: object
+      properties:
+        # signalData:
+        #   type: array
+        #   example: [ 0, 0.1, 0.2, 0.1, -0.1, -0.3, -0.05, 0.1, 0.2, 0, 0.1, 0.2, 0.1, -0.1, -0.3, -0.05, 0.1, 0.2, 0, 0.1, 0.2, 0.1, -0.1, -0.3, -0.05, 0.1, 0.2, 0, 0.1, 0.2, 0.1, -0.1, -0.3, -0.05, 0.1, 0.2, 0, 0.1, 0.2, 0.1, -0.1, -0.3, -0.05, 0.1, 0.2 ]
+        # sampFreq:
+        #   type: float
+        #   format: float64
+        #   example: 500
+        csvData:
+          type: string
+          example: ""
+        valType:
+          type: string
+          example: lowAcc
+        axis:
+          type: string
+          example: X
+        cutOffFreqLow:
+          type: float
+          format: float64
+          example: 10
+        cutOffFreqHigh:
+          type: float
+          format: float64
+          example: 200
+        filterFuncCode:
+          type: int
+          format: int64
+          example: 0
+    FilterResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        filteredData:
+          type: array
+          example: [ 0, 0.1, 0.2, 0.1, -0.1, -0.3, -0.05, 0.1, 0.2 ]
+    CalEnvelopeDemodulationRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        axis:
+          type: string
+          example: X
+        valType:
+          type: string
+          example: lowAcc
+        cutOffFreqLow:
+          type: float
+          format: float64
+          example: 0
+        cutOffFreqHigh:
+          type: float
+          format: float64
+          example: 200
+        windowType:
+          type: string
+          example: hanning
+    CalEnvelopeDemodulationResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            freqDomain:
+              type: object
+              properties:
+                x:
+                  type: array
+                  example: [ 0, 0.1, 0.2 ]
+                y:
+                  type: array
+                  example: [ 1, 2, 3 ]
+                idxPeak:
+                  type: array
+                  example: [ 1, 2, 3 ]
+                idxNearestPeak:
+                  type: array
+                  example: [ 1, 2, 3 ]
+            envelopeDemodulation:
+              type: object
+              properties:
+                x:
+                  type: array
+                  example: [ 0, 0.1, 0.2 ]
+                y:
+                  type: array
+                  example: [ 1, 2, 3 ]
+                idxPeak:
+                  type: array
+                  example: [ 1, 2, 3 ]
+                idxNearestPeak:
+                  type: array
+                  example: [ 1, 2, 3 ]
+            unit:
+              type: string
+              example: g
+    CalDataEnvelopeDemodulationRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        axis:
+          type: string
+          example: X
+        cutOffFreqLow:
+          type: float
+          format: float64
+          example: 0
+        cutOffFreqHigh:
+          type: float
+          format: float64
+          example: 200
+        envelopeCalMode:
+          type: string
+          example: peak_connect
+        windowType:
+          type: string
+          example: hanning
+    CalDataEnvelopeDemodulationResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            freqDomain:
+              type: object
+              properties:
+                x:
+                  type: array
+                  example: [ 0, 0.1, 0.2 ]
+                y:
+                  type: array
+                  example: [ 1, 2, 3 ]
+            envelopeDemodulation:
+              type: object
+              properties:
+                x:
+                  type: array
+                  example: [ 0, 0.1, 0.2 ]
+                y:
+                  type: array
+                  example: [ 1, 2, 3 ]
+    CalTimeDomainCurveRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+        valType:
+          type: string
+          example: lowAcc
+    CalTimeDomainCurveResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            xdata:
+              type: object
+              properties:
+                x:
+                  type: array
+                  example: [ 0, 0.1, 0.2 ]
+                y:
+                  type: array
+                  example: [ 1, 2, 3 ]
+            ydata:
+              type: object
+              properties:
+                x:
+                  type: array
+                  example: [ 0, 0.1, 0.2 ]
+                y:
+                  type: array
+                  example: [ 1, 2, 3 ]
+            zdata:
+              type: object
+              properties:
+                x:
+                  type: array
+                  example: [ 0, 0.1, 0.2 ]
+                y:
+                  type: array
+                  example: [ 1, 2, 3 ]
+            unit:
+              type: string
+              example: g
+    CrossPhaseAnalyseRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+    CrossPhaseAnalyseResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        data:
+          type: object
+          properties:
+            x:
+              type: array
+              example: [ 0, 1, 2 ]
+            complementaryAmplitudeXY:
+              type: array
+              example: [ 0, 0.1, 0.2 ]
+            complementaryAmplitudeYZ:
+              type: array
+              example: [ 0, 0.1, 0.2 ]
+            complementaryAmplitudeZX:
+              type: array
+              example: [ 0, 0.1, 0.2 ]
+            phaseDiffXY:
+              type: array
+              example: [ 0, 0.1, 0.2 ]
+            phaseDiffYZ:
+              type: array
+              example: [ 0, 0.1, 0.2 ]
+            phaseDiffZX:
+              type: array
+              example: [ 0, 0.1, 0.2 ]
+    ShowSignalFeatureRequest:
+      type: object
+      properties:
+        csvDataLowAcc:
+          type: string
+          example: ""
+        csvDataHighAcc:
+          type: string
+          example: ""
+    ShowSignalFeatureResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+    DetectCameraMoveRequest:
+      type: object
+      properties:
+        csvData:
+          type: string
+          example: ""
+    DetectCameraMoveResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        cameraMove:
+          type: bool
+          example: False
+    DiagnoseRequest:
+      type: object
+      properties:
+        equipType:
+          type: string
+          example: bearing
+        csvData:
+          type: string
+          example: ""
+        suppData:
+          type: object
+          properties:
+            valType:
+              type: string
+              example: lowAcc
+            motorRatedPower:
+              type: float
+              format: float64
+              example: 115
+            rotSpdNominal:
+              type: float
+              format: float64
+              example: 1700
+            rotSpdActual:
+              type: float
+              format: float64
+              example: 1100
+            electSupFreq:
+              type: float
+              format: float64
+              example: 150
+            bearingStatus:
+              type: float
+              format: float64
+              example: 2
+    DiagnoseResponse:
+      type: object
+      properties:
+        status:
+          type: int
+          example: 0
+        conditionCode:
+          type: string
+          example: normal
+
+
+#=====================================================================
+    EwtAnalyzeRequest:
+      type: object
+      required:
+        - csvData
+      properties:
+        csvData:
+          type: string
+          description: 原始CSV格式字符串，包含时间和X/Y/Z三轴数据
+          example: "time,X,Y,Z\n0,0.1,0.2,0.3\n1,0.4,0.5,0.6"
+        decayFactor:
+          type: number
+          description: 衰减因子（范围0~1），默认0.5
+          default: 0.5
+        valType:
+          type: string
+          description: 信号类型，如 highAcc / lowAcc
+          example: "highAcc"
+        serialNo:
+          type: string
+          description: 设备编号，用于追踪诊断记录
+          example: "C20000BZP5"
+
+    EwtAnalyzeResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 0
+        result:
+          type: object
+          properties:
+            X:
+              type: object
+              properties:
+                di:
+                  type: number
+                  example: 0.23
+            Y:
+              type: object
+              properties:
+                di:
+                  type: number
+                  example: 0.45
+            Z:
+              type: object
+              properties:
+                di:
+                  type: number
+                  example: 0.37
