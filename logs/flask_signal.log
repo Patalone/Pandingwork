@@ -1,0 +1,168 @@
+2025-04-09 17:52:29,269 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-04-09 17:57:58,921 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-04-10 13:35:12,676 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-04-10 15:17:13,862 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-04-11 10:31:13,233 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-04-22 17:01:43,176 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-08 09:17:15,206 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-08 10:51:50,368 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-08 16:41:10,505 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 15:00:53,304 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:28:06,163 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:29:21,213 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:31:38,236 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 17:40:11,094 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 17:43:10,142 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:46:11,586 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:46:53,857 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 17:52:02,698 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 17:52:21,352 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:53:20,520 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:53:26,717 - root - ERROR - jsonify failure; defaulting to json.dumps
+Traceback (most recent call last):
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 164, in get
+    return jsonify(self.loader())
+                   ^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 580, in get_apispecs
+    if key in paths[srule]:
+       ^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+2025-05-14 17:53:26,792 - signal_app - ERROR - Exception on /apispec_1.json [GET]
+Traceback (most recent call last):
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 164, in get
+    return jsonify(self.loader())
+                   ^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 580, in get_apispecs
+    if key in paths[srule]:
+       ^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 2529, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask_restx\api.py", line 674, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\views.py", line 107, in view
+    return current_app.ensure_sync(self.dispatch_request)(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\views.py", line 188, in dispatch_request
+    return current_app.ensure_sync(meth)(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 168, in get
+    specs = json.dumps(self.loader())
+                       ^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 580, in get_apispecs
+    if key in paths[srule]:
+       ^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+2025-05-14 17:55:22,759 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 17:56:04,570 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:00:47,303 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:06:31,092 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:07:05,003 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:08:01,988 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:13:57,903 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:14:17,374 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:18:20,322 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:18:56,055 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:20:28,578 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:21:34,580 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:22:37,523 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:24:07,076 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:24:25,975 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:31:48,888 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:37:43,774 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:38:09,164 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 18:48:40,026 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:51:45,742 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 18:52:11,550 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 19:04:51,026 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 19:20:50,975 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:23:21,068 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 19:27:25,520 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:40:38,553 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:44:34,594 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:48:01,499 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:48:15,534 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 19:49:09,580 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:49:22,598 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 19:49:42,568 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:51:11,516 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:51:18,886 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 19:57:07,565 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 19:57:32,610 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-14 20:02:04,719 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 20:02:34,921 - signal_app - ERROR - 非法请求头: Content-Type=None
+2025-05-14 20:04:05,857 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-14 20:04:19,152 - signal_app - ERROR - 非法请求头: Content-Type=None
+2025-05-14 20:04:31,471 - signal_app - ERROR - 非法请求头: Content-Type=None
+2025-05-15 09:00:13,418 - signal_app - ERROR - 非法请求头: Content-Type=None
+2025-05-15 09:00:49,329 - signal_app - ERROR - 非法请求头: Content-Type=None
+2025-05-15 09:01:38,441 - signal_app - ERROR - 非法请求头: Content-Type=None
+2025-05-15 09:05:46,948 - signal_app - ERROR - 非法请求头: Content-Type=None
+2025-05-15 09:09:21,091 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-15 09:09:29,272 - root - ERROR - EWT分析失败: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-05-15 09:18:14,576 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-15 09:18:19,645 - root - ERROR - jsonify failure; defaulting to json.dumps
+Traceback (most recent call last):
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 164, in get
+    return jsonify(self.loader())
+                   ^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 580, in get_apispecs
+    if key in paths[srule]:
+       ^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+2025-05-15 09:18:19,647 - signal_app - ERROR - Exception on /apispec_1.json [GET]
+Traceback (most recent call last):
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 164, in get
+    return jsonify(self.loader())
+                   ^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 580, in get_apispecs
+    if key in paths[srule]:
+       ^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 2529, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\views.py", line 107, in view
+    return current_app.ensure_sync(self.dispatch_request)(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flask\views.py", line 188, in dispatch_request
+    return current_app.ensure_sync(meth)(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 168, in get
+    specs = json.dumps(self.loader())
+                       ^^^^^^^^^^^^^
+  File "C:\Users\HY-W\.conda\envs\Panding\Lib\site-packages\flasgger\base.py", line 580, in get_apispecs
+    if key in paths[srule]:
+       ^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+2025-05-15 09:20:19,821 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-15 09:22:11,602 - waitress - INFO - Serving on http://0.0.0.0:5300
+2025-05-15 09:28:12,199 - waitress - INFO - Serving on http://0.0.0.0:5300

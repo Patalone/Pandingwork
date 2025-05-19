@@ -1,0 +1,65 @@
+# 日志系统核心配置
+version: 1
+disable_existing_loggers: False
+
+# 格式化模板
+formatters:
+  standard:
+    format: "[%(asctime)s] %(levelname)-8s [%(name)s:%(lineno)d] >> %(message)s"
+    datefmt: "%Y-%m-%dT%H:%M:%S%z"
+  access:
+    format: "%(asctime)s - %(message)s"
+
+# 日志处理器
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: standard
+    stream: ext://sys.stdout
+
+  file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    filename: ./logs/app.log
+    formatter: standard
+    maxBytes: 10485760  # 10MB
+    backupCount: 5
+    encoding: utf8
+    delay: True
+
+  access_handler:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    filename: ./logs/access.log
+    formatter: access
+    when: midnight
+    backupCount: 7
+    encoding: utf8
+
+# 日志记录器定义
+loggers:
+  algorithm:
+    handlers: [console, file_handler]
+    level: INFO
+    propagate: False
+
+  flask:
+    handlers: [file_handler]
+    level: WARNING
+    propagate: False
+
+  werkzeug:
+    handlers: [file_handler]
+    level: WARNING
+    propagate: False
+
+  access:
+    handlers: [access_handler]
+    level: INFO
+    propagate: False
+
+# 根日志配置
+root:
+  handlers: [console, file_handler]
+  level: WARNING
